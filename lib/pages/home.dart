@@ -2,7 +2,7 @@ import 'dart:ffi';
 
 import 'package:todoapp/constants/colors.dart';
 import 'package:flutter/material.dart';
-//import 'package:flutter_svg/flutter_svg.dart';
+// import 'package:flutter_svg/flutter_svg.dart';
 import 'package:todoapp/widget/todo_item.dart';
 import '../model/todo.dart';
 import 'package:todoapp/database/database_helper.dart';
@@ -22,16 +22,16 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    // _loadTodos();
+    _loadTodos();
     print("...number of items ${todosList.length}");
   }
 
-  // Future<void> _loadTodos() async {
-  //   final todos = await DatabaseHelper.instance.getAllTodos();
-  //   setState(() {
-  //     todosList = todos;
-  //   });
-  // }
+  Future<void> _loadTodos() async {
+    final todos = await DatabaseHelper.instance.getAllTodos();
+    setState(() {
+      todosList = todos;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -128,17 +128,20 @@ class _HomePageState extends State<HomePage> {
 
   void _handleDeleteChange(String id) async {
     await DatabaseHelper.instance.deleteTodo(id);
-    // await _loadTodos();
+    await _loadTodos();
   }
 
 Future<void> _addToDoItem(String toDo) async {
+  if(toDo != ""){
   final newTodo = ToDo(
     id: DateTime.now().millisecondsSinceEpoch.toString(),
     todoText: toDo
   );
+  print(newTodo);
 
   await DatabaseHelper.instance.insertTodo(newTodo);
-  // await _loadTodos();
+  }
+  await _loadTodos();
   _todoController.clear();
 }
 

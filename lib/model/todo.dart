@@ -17,19 +17,19 @@ class ToDo{
     this.isDone = false;
   }
 
-  //  ToDo.fromMap(Map<String, dynamic> map){
-  //   id = map['columnId'];
-  //   todoText = map['columnText'] ;
-  //   isDone = map['columnisDone'] == 1 ? true : false;
-  // }
+   ToDo.fromMap(Map<String, dynamic> map){
+    id = map['id'];
+    todoText = map['todoText'] ;
+    isDone = map['isDone'] == 1 ? true : false;
+  }
 
   Map<String, dynamic> toMap(){
     final map = <String, dynamic>{
       columnText: todoText,
-      columnisDone: isDone == true
+      columnisDone: isDone == 1 ? true : false
     };
     if(id != null){
-      map['columnId'] = id;
+      map['id'] = id;
     }
     return map;
   }

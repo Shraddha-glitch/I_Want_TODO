@@ -26,7 +26,7 @@ class ToDoItem extends StatelessWidget {
          color: tdBlue,
          ),
          title: Text(
-          todo.todoText ?? '',
+          todo.todoText!,
           style: TextStyle(
           fontSize: 16,
           color: tdBlack,
@@ -45,7 +45,7 @@ class ToDoItem extends StatelessWidget {
             iconSize:18,
             icon: const Icon(Icons.delete),
             onPressed: (){
-            onDeleteItem(todo.id ?? '');
+            onDeleteItem(todo.id!);
             },
           ),
          ),

@@ -43,13 +43,14 @@ class DatabaseHelper{
 
   Future _createDB(Database db, int version)async{
     
-    await db.execute("""
+    await db.execute('''
       create table $todoTable (
         $columnId text primary key,
         $columnText text,
         $columnisDone integer)
-    """);
-    print('done');
+    ''');
+     print("Database created!");
+  
   }
 
 		// Fetch Operation: Get all todo objects from database
@@ -63,33 +64,41 @@ class DatabaseHelper{
 		}
 
   Future<int> insertTodo(ToDo todo) async {
+    var no = todo.id;
+    var text = todo.todoText;
+    var check = todo.isDone;
+    print(todo.id);
+    print(todo.todoText);
+    print(todo.isDone);
+
+print("Insert into $todoTable(id, todoText,isDone ) values( $no, $text, $check)");
     final db = await database;
-    var hehe= await db.rawInsert('Insert into $todoTable(id, todoText,isDone ) values("ttttt", "hekko", 1)');
-    print(hehe);
+    var hehe= await db.rawInsert('Insert into $todoTable(id, todoText,isDone ) values( \'$no\', \'$text\', $check)');
     return hehe;
   }
 
   Future<int> deleteTodo(String id) async {
+
     final db = await database;
-    return await db.rawDelete('DELETE FROM $todoTable WHERE $columnId = $id');
+    return await db.rawDelete('DELETE FROM $todoTable WHERE id = $id');
   }
 
 
 
-  // Future<List<ToDo>> getAllTodos() async {
-  //   final db = await database;
+  Future<List<ToDo>> getAllTodos() async {
+    final db = await database;
 
-  //   var todoMapList = await getTodoMapList(); // Get 'Map List' from database
-	// 	int count = todoMapList.length;         // Count the number of map entries in db table
+    var todoMapList = await getTodoMapList(); // Get 'Map List' from database
+		int count = todoMapList.length;         // Count the number of map entries in db table
     
     
-  //   List<ToDo> todoList = [];
-	// 		// For loop to create a 'todo List' from a 'Map List'
-	// 		for (int i = 0; i < count; i++) {
-	// 			todoList.add(ToDo.fromMap(todoMapList[i]));
-	// 		}
-	// 		return todoList;
-  // }
+    List<ToDo> todoList = [];
+			// For loop to create a 'todo List' from a 'Map List'
+			for (int i = 0; i < count; i++) {
+				todoList.add(ToDo.fromMap(todoMapList[i]));
+			}
+			return todoList;
+  }
     //to close db
   Future close() async{
     //access db we have created before
