@@ -22,16 +22,16 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    _loadTodos();
+    // _loadTodos();
     print("...number of items ${todosList.length}");
   }
 
-  Future<void> _loadTodos() async {
-    final todos = await DatabaseHelper.instance.getAllTodos();
-    setState(() {
-      todosList = todos;
-    });
-  }
+  // Future<void> _loadTodos() async {
+  //   final todos = await DatabaseHelper.instance.getAllTodos();
+  //   setState(() {
+  //     todosList = todos;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -128,7 +128,7 @@ class _HomePageState extends State<HomePage> {
 
   void _handleDeleteChange(String id) async {
     await DatabaseHelper.instance.deleteTodo(id);
-    await _loadTodos();
+    // await _loadTodos();
   }
 
 Future<void> _addToDoItem(String toDo) async {
@@ -138,7 +138,7 @@ Future<void> _addToDoItem(String toDo) async {
   );
 
   await DatabaseHelper.instance.insertTodo(newTodo);
-  await _loadTodos();
+  // await _loadTodos();
   _todoController.clear();
 }
 

@@ -49,6 +49,7 @@ class DatabaseHelper{
         $columnText text,
         $columnisDone integer)
     """);
+    print('done');
   }
 
 		// Fetch Operation: Get all todo objects from database
@@ -63,7 +64,9 @@ class DatabaseHelper{
 
   Future<int> insertTodo(ToDo todo) async {
     final db = await database;
-    return await db.insert(todoTable, todo.toMap());
+    var hehe= await db.rawInsert('Insert into $todoTable(id, todoText,isDone ) values("ttttt", "hekko", 1)');
+    print(hehe);
+    return hehe;
   }
 
   Future<int> deleteTodo(String id) async {
@@ -73,20 +76,20 @@ class DatabaseHelper{
 
 
 
-  Future<List<ToDo>> getAllTodos() async {
-    final db = await database;
+  // Future<List<ToDo>> getAllTodos() async {
+  //   final db = await database;
 
-    var todoMapList = await getTodoMapList(); // Get 'Map List' from database
-		int count = todoMapList.length;         // Count the number of map entries in db table
+  //   var todoMapList = await getTodoMapList(); // Get 'Map List' from database
+	// 	int count = todoMapList.length;         // Count the number of map entries in db table
     
     
-    List<dynamic> todoList = List<dynamic>();
-			// For loop to create a 'todo List' from a 'Map List'
-			for (int i = 0; i < count; i++) {
-				todoList.add(ToDo.fromMap(todoMapList[i]));
-			}
-			return todoList;
-  }
+  //   List<ToDo> todoList = [];
+	// 		// For loop to create a 'todo List' from a 'Map List'
+	// 		for (int i = 0; i < count; i++) {
+	// 			todoList.add(ToDo.fromMap(todoMapList[i]));
+	// 		}
+	// 		return todoList;
+  // }
     //to close db
   Future close() async{
     //access db we have created before
