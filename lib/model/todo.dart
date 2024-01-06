@@ -1,34 +1,35 @@
-// todo.dart
-import 'package:json_annotation/json_annotation.dart';
+import 'package:flutter/material.dart';
 
-part 'todo.g.dart';
+const String todoTable = 'todo';
+const String columnId = 'id';
+const String columnText = 'todoText';
+const String columnisDone = 'isDone';
 
-@JsonSerializable()
 class ToDo {
   String? id;
   String? todoText;
   bool? isDone;
 
-  ToDo({
-    required this.id,
-    required this.todoText,
-    this.isDone = false,
-  });
+  ToDo({required String id, required String todoText}) {
+    this.id = id;
+    this.todoText = todoText;
+    this.isDone = false;
+  }
 
-  factory ToDo.fromJson(Map<String, dynamic> json) => _$ToDoFromJson(json);
+  ToDo.fromMap(Map<String, dynamic> map) {
+    id = map['id'];
+    todoText = map['todoText'];
+    isDone = map['isDone'] == 1 ? true : false;
+  }
 
-  Map<String, dynamic> toJson() => _$ToDoToJson(this);
-
-  static List<ToDo> todoList() {
-    return [
-      ToDo(id: '01', todoText: 'Morning Exercise', isDone: true),
-      ToDo(id: '02', todoText: 'Breakfast', isDone: true),
-      ToDo(id: '03', todoText: 'Washing Clothes'),
-      ToDo(id: '04', todoText: 'Ready for office'),
-      ToDo(id: '05', todoText: 'Make todo list app'),
-      ToDo(id: '06', todoText: 'Meeting with client'),
-      ToDo(id: '07', todoText: 'Buy Groceries'),
-      ToDo(id: '08', todoText: 'Dinner Time'),
-    ];
+  Map<String, dynamic> toMap() {
+    final map = <String, dynamic>{
+      columnText: todoText,
+      columnisDone: isDone == 1 ? true : false
+    };
+    if (id != null) {
+      map['id'] = id;
+    }
+    return map;
   }
 }
